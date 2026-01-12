@@ -1,0 +1,81 @@
+<!-- <h1>Lista de tareas</h1>
+
+<input
+  type="text"
+  [(ngModel)]="newTaskTitle"
+  placeholder="Nueva tarea"
+/>
+
+<button (click)="addTask()">Agregar</button>
+
+<ul>
+  <li *ngFor="let task of tasks">
+    <span [style.textDecoration]="task.isCompleted ? 'line-through' : 'none'">
+      {{ task.title }}
+    </span>
+
+    <button *ngIf="!task.isCompleted" (click)="completeTask(task.id)">
+      Completar
+    </button>
+  </li>
+</ul> -->
+
+<mat-toolbar color="primary">
+  <span>Lista de tareas</span>
+</mat-toolbar>
+
+<div style="padding: 20px; max-width: 600px; margin: auto">
+
+  <mat-card>
+    <mat-card-content>
+
+      <mat-form-field appearance="outline" style="width: 100%">
+        <mat-label>Nueva tarea</mat-label>
+        <input matInput [(ngModel)]="newTaskTitle" />
+      </mat-form-field>
+
+      <button
+        mat-raised-button
+        color="primary"
+        style="margin-top: 10px"
+        (click)="addTask()"
+        [disabled]="!newTaskTitle.trim()"
+      >
+        Agregar
+      </button>
+
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card style="margin-top: 20px">
+    <mat-list>
+      <mat-list-item *ngFor="let task of tasks">
+
+        <span
+          [style.text-decoration]="task.isCompleted ? 'line-through' : 'none'"
+        >
+          {{ task.title }}
+        </span>
+
+        <button
+          mat-icon-button
+          color="primary"
+          *ngIf="!task.isCompleted"
+          (click)="completeTask(task.id)"
+        >
+          <mat-icon>check</mat-icon>
+        </button>
+
+      </mat-list-item>
+    </mat-list>
+
+    <p *ngIf="tasks.length === 0" style="text-align:center;color:#666">
+      No hay tareas aún
+    </p>
+
+  </mat-card>
+
+</div>
+
+
+
