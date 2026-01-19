@@ -1,16 +1,3 @@
-// import { Component } from '@angular/core';
-
-// @Component({
-//   selector: 'app-root',
-//   standalone: true,
-//   imports: [],
-//   templateUrl: './app.component.html',
-//   styleUrl: './app.component.css'
-// })
-// export class AppComponent {
-//   title = 'frontend';
-// }
-
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -22,14 +9,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
-
-
-// @Component({
-//   selector: 'app-root',
-//   standalone: true,
-//   imports: [CommonModule, FormsModule],
-//   templateUrl: './app.component.html'
-// })
 
 @Component({
   selector: 'app-root',
@@ -55,14 +34,15 @@ export class AppComponent implements OnInit {
 
   constructor(private taskService: TaskService) {}
 
+  /** Cargamos las tareas desde el backend al iniciar la app*/
   ngOnInit(): void {
     this.loadTasks();
   }
 
+  /** Llama al servicio para obtener las tareas y las filtra, para solo mostrar las no completadas*/
   loadTasks(): void {
     this.taskService.getTasks().subscribe({
       next: (data: Task[]) => {
-        //this.tasks = data;
         this.tasks = data.filter(task => !task.isCompleted);
       },
       error: (err) => {
@@ -71,8 +51,10 @@ export class AppComponent implements OnInit {
     });
   }
 
+
+  /**Agrega una tarea nueva*/
   addTask(): void {
-    if (!this.newTaskTitle.trim()) return;
+    if (!this.newTaskTitle.trim()) return; //Evita crear tareas vacías
 
     const task: Task = {
       id: 0,
@@ -86,6 +68,7 @@ export class AppComponent implements OnInit {
     });
   }
 
+  /** Marca una tarea como completada y vuelve a cargar la lista */
   completeTask(id: number): void {
     this.taskService.completeTask(id).subscribe(() => {
       this.loadTasks();
